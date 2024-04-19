@@ -22,7 +22,7 @@ class Agent:
 		self.epsilon_min = 0.01
 		self.epsilon_decay = 0.995
 
-		self.model = load_model("models/" + model_name) if is_eval else self._model()
+		self.model = load_model(model_name) if is_eval else self._model()
 
 	def _model(self):
 		model = Sequential()
@@ -30,7 +30,7 @@ class Agent:
 		model.add(Dense(units=32, activation="relu"))
 		model.add(Dense(units=8, activation="relu"))
 		model.add(Dense(self.action_size, activation="linear"))
-		model.compile(loss="mse", optimizer=Adam(lr=0.001))
+		model.compile(loss="mean_squared_error", optimizer=Adam(learning_rate=0.001))
 		return model
 
 	def act(self, state):
@@ -58,5 +58,3 @@ class Agent:
 		if self.epsilon > self.epsilon_min:
 			self.epsilon *= self.epsilon_decay 
 
-model = tf.saved_model.load('/Users/luozisheng/Desktop/WUSTL/2024 spring/CS 510/project/q-trader/models/model_ep0/')
-model.save('test.h5')

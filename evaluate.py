@@ -10,9 +10,9 @@ if len(sys.argv) != 3:
 	exit()
 
 stock_name, model_name = sys.argv[1], sys.argv[2]
-model = tf.saved_model.load("models/model_ep0/" + model_name)
-window_size = model.layers[0].input.shape.as_list()[1]
-
+# model = tf.saved_model.load("models/model_ep0/" + model_name)
+model = load_model(model_name)
+window_size = list(model.layers[0].input.shape)[1]
 agent = Agent(window_size, True, model_name)
 data = getStockDataVec(stock_name)
 l = len(data) - 1 # in our case, the unit will be in miliseconds
